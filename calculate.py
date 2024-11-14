@@ -1,42 +1,3 @@
-import circle
-import square
-
-
-figs = ["circle", "square"]
-funcs = ["perimeter", "area"]
-sizes = {}
-
-
-def calc(fig, func, size):
-    assert fig in figs
-    assert func in funcs
-
-    result = eval(f"{fig}.{func}(*{size})")
-    print(f"{func} of {fig} is {result}")
-
-
-if __name__ == "__main__":
-    func = ""
-    fig = ""
-    size = list()
-
-    while fig not in figs:
-        fig = input(f"Enter figure name, avaliable are {figs}:\n")
-
-    while func not in funcs:
-        func = input(f"Enter function name, avaliable are {funcs}:\n")
-
-    while len(size) != sizes.get(f"{func}-{fig}", 1):
-        size = list(
-            map(
-                int,
-                input(
-                    "Input figure sizes separated by space, 1 for circle and square\n"
-                ).split(" "),
-            )
-        )
-
-    calc(fig, func, size)
 import math
 from circle import area as circle_area, perimeter as circle_perimeter
 from square import area as square_area, perimeter as square_perimeter
@@ -51,8 +12,8 @@ def area(a, b, c):
 
 
 def perimeter(a, b, c):
-    """Принимает числа a, b, c и возвращает периметр"
-    "треугольника."""
+    """Принимает числа a, b, c и возвращает периметр
+    треугольника."""
     return a + b + c
 
 
@@ -66,6 +27,10 @@ def calc(fig, func, size):
 
     assert fig in figs
     assert func in funcs
+
+    # Проверка на отрицательные значения
+    if any(s <= 0 for s in size):
+        raise ValueError("Размеры не могут быть отрицательными или нулевыми")
 
     if fig == "circle" and func == "perimeter":
         return circle_perimeter(*size)
@@ -81,6 +46,7 @@ def calc(fig, func, size):
         return triangle_area(*size)
 
 
+
 if __name__ == "__main__":
     func = ""
     fig = ""
@@ -88,13 +54,30 @@ if __name__ == "__main__":
 
     while fig not in ["circle", "square", "triangle"]:
         fig = input(
-            "Enter figure name, available are ['circle', 'square'," "'triangle']:\n"
+            "Enter figure name, available are ['circle', 'square', 'triangle']:\n"
         )
 
     while func not in ["perimeter", "area"]:
         func = input("Enter function name, available are ['perimeter', 'area']:\n")
 
-        while len(size) != {
+    while True:
+        size = list(
+            map(
+                int,
+                input(
+                    "Input figure sizes separated by space\n"
+                    "1 for circle and square, 3 for triangle\n"
+                ).split(),
+            )
+        )
+        
+        # Проверяем на отрицательные значения
+        if any(i < 0 for i in size):
+            print("Error: Sizes must be positive numbers. Exiting.")
+            exit(1)
+
+        # Проверяем на правильное количество параметров для каждой фигуры и функции
+        if len(size) == {
             "circle-perimeter": 1,
             "circle-area": 1,
             "square-perimeter": 1,
@@ -102,14 +85,9 @@ if __name__ == "__main__":
             "triangle-perimeter": 3,
             "triangle-area": 3,
         }.get(f"{func}-{fig}", 1):
-            size = list(
-                map(
-                    int,
-                    input(
-                        "Input figure sizes separated by space\n"
-                        "1 for circle and square\n"
-                    ).split(),
-                )
-            )
+            break
+        else:
+            print("Error: Invalid number of dimensions for the selected figure.")
+
     result = calc(fig, func, size)
     print(f"{func} of {fig} is {result}")
