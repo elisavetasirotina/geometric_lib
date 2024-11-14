@@ -149,6 +149,49 @@ class TestShapes(unittest.TestCase):
         expected = square.perimeter(5)
         self.assertEqual(result, expected)
 
+    # Тесты для отрицательных значений в calc
+    def test_calc_circle_perimeter_negative(self):
+        fig = "circle"
+        func = "perimeter"
+        size = [-5]  # Отрицательный радиус
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
+    def test_calc_circle_area_negative(self):
+        fig = "circle"
+        func = "area"
+        size = [-5]  # Отрицательный радиус
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
+    def test_calc_square_perimeter_negative(self):
+        fig = "square"
+        func = "perimeter"
+        size = [-4]  # Отрицательная сторона
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
+    def test_calc_square_area_negative(self):
+        fig = "square"
+        func = "area"
+        size = [-4]  # Отрицательная сторона
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
+    def test_calc_triangle_perimeter_negative(self):
+        fig = "triangle"
+        func = "perimeter"
+        size = [-3, -4, -5]  # Отрицательные стороны
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
+    def test_calc_triangle_area_negative(self):
+        fig = "triangle"
+        func = "area"
+        size = [-3, -4, -5]  # Отрицательные стороны
+        with self.assertRaises(ValueError):
+            calc(fig, func, size)
+
 
 if __name__ == "__main__":
     unittest.main()
