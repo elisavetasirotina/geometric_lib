@@ -46,7 +46,6 @@ def calc(fig, func, size):
         return triangle_area(*size)
 
 
-
 if __name__ == "__main__":
     func = ""
     fig = ""
@@ -70,7 +69,7 @@ if __name__ == "__main__":
                 ).split(),
             )
         )
-        
+
         # Проверяем на отрицательные значения
         if any(i < 0 for i in size):
             print("Error: Sizes must be positive numbers. Exiting.")
